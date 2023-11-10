@@ -8,12 +8,17 @@ enum ITEM {
   BOMB = 2,
   TARGET = 3,
   MIRROR = 4,
-  SPLIT = 5,
+  DIAGONAL = 5,
   SOURCE = 6,
 }
 
 // TODO: the reductions can be written once as a utility, they are repeated quite a lot
 
+/**
+ * A Box is the unit entity in the game, where the game is composed of `N x M` boxes.
+ *
+ * One can assume that if all boxes are valid, the game has a
+ */
 export abstract class Box extends Struct({
   ins: [Bool, Bool, Bool, Bool, Bool, Bool, Bool, Bool],
   outs: [Bool, Bool, Bool, Bool, Bool, Bool, Bool, Bool],
@@ -22,13 +27,6 @@ export abstract class Box extends Struct({
 }) {
   abstract isItem(): Bool;
   abstract isValid(): Bool;
-
-  /** Asserts that the box direction is valid.
-   * Only use with items that require direction.
-   */
-  isDirValid() {
-    this.itemDir.lessThan(8); // there are 8 directions in total, 0-indexed
-  }
 }
 
 /** A bomb box should have no `in` signals. */
@@ -172,15 +170,5 @@ export class MirrorBox extends Box {
         // or-reduce to get at least 1 valid
         .reduce((acc, cur) => acc.or(cur))
     );
-  }
-}
-
-export class SplitBox extends Box {
-  isItem(): Bool {
-    return this.item.equals(ITEM.SOURCE);
-  }
-
-  isValid(): Bool {
-    throw new Error('TODO: implement');
   }
 }
