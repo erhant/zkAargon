@@ -1,6 +1,5 @@
 import { Field, SmartContract, state, State, method, Struct, Bool } from 'o1js';
 import { DIR } from './utils/Direction';
-import { Bool, Bool, Bool } from 'o1js/dist/node/lib/bool';
 
 /** A box item. */
 enum ITEM {
@@ -24,13 +23,6 @@ export abstract class Box extends Struct({
   /** Asserts that the box direction is valid. */
   isDirValid() {
     this.itemDir.lessThan(8); // there are 8 directions in total, 0-indexed
-  }
-
-  /** A wall box should have no `out` signals. */
-  private validWall() {
-    const isItem = this.item.equals(ITEM.WALL);
-    const isValid = 
-    return isItem.and(isValid);
   }
 }
 
@@ -63,7 +55,7 @@ export class WallBox extends Box {
   isItem(): Bool {
     return this.item.equals(ITEM.WALL);
   }
-  
+
   isValid(): Bool {
     return this.outs.reduce((acc, cur) => acc.or(cur));
   }
