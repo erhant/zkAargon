@@ -1,4 +1,4 @@
-type DirectionValues = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7;
+export type DIRType = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7;
 
 /** A direction of a box.
  *
@@ -45,7 +45,7 @@ export class DIR {
   }
 
   /** Map a direction to an opposite direction */
-  static opposite(dir: DirectionValues) {
+  static opposite(dir: DIRType) {
     return {
       [DIR.TOP_LEFT]: DIR.BOTTOM_RIGHT,
       [DIR.TOP]: DIR.BOTTOM,
