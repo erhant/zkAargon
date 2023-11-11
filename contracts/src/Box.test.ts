@@ -5,19 +5,11 @@ import {
   PublicKey,
   AccountUpdate,
   SmartContract,
-  state,
   method,
-  State,
   Bool,
-  Provable,
 } from 'o1js';
-import { AllBoxes, Box, ITEM } from './Box';
-import { BombBox } from './boxes/Bomb';
-import { CaseType, cases } from './test/cases';
-import { WallBox } from './boxes/Wall';
-import { EmptyBox } from './boxes/Empty';
-import { MirrorBox } from './boxes/Mirror';
-import { SourceBox } from './boxes/Source';
+import { Box, ITEM } from './Box';
+import { cases } from './test/cases';
 
 // NOTE: interesting things about this test:
 // - giving a union type to `box` in the contract causes
@@ -30,44 +22,60 @@ export class BoxTester extends SmartContract {
     super.init();
   }
 
-  @method validateBomb(box: BombBox) {
-    box.isValid().assertTrue();
+  @method validateBomb(box: Box) {
+    box.validBomb().assertTrue();
   }
 
-  @method invalidateBomb(box: BombBox) {
-    box.isValid().assertFalse();
+  @method invalidateBomb(box: Box) {
+    box.validBomb().assertFalse();
   }
 
-  @method validateWall(box: WallBox) {
-    box.isValid().assertTrue();
+  @method validateEmpty(box: Box) {
+    box.validEmpty().assertTrue();
   }
 
-  @method invalidateWall(box: WallBox) {
-    box.isValid().assertFalse();
+  @method invalidateEmpty(box: Box) {
+    box.validEmpty().assertFalse();
   }
 
-  @method validateEmpty(box: EmptyBox) {
-    box.isValid().assertTrue();
+  @method validateMirror(box: Box) {
+    box.validMirror().assertTrue();
   }
 
-  @method invalidateEmpty(box: EmptyBox) {
-    box.isValid().assertFalse();
+  @method invalidateMirror(box: Box) {
+    box.validMirror().assertFalse();
   }
 
-  @method validateMirror(box: MirrorBox) {
-    box.isValid().assertTrue();
+  @method validateSource(box: Box) {
+    box.validSource().assertTrue();
   }
 
-  @method invalidateMirror(box: MirrorBox) {
-    box.isValid().assertFalse();
+  @method invalidateSource(box: Box) {
+    box.validSource().assertFalse();
   }
 
-  @method validateSource(box: SourceBox) {
-    box.isValid().assertTrue();
+  @method validateSplit(box: Box) {
+    box.validSplit().assertTrue();
   }
 
-  @method invalidateSource(box: SourceBox) {
-    box.isValid().assertFalse();
+  @method invalidateSplit(box: Box) {
+    box.validSplit().assertFalse();
+  }
+
+  @method validateTarget(box: Box) {
+    box.validTarget().assertTrue();
+  }
+
+  @method invalidateTarget(box: Box) {
+    box.validTarget().assertFalse();
+  }
+
+  @method validateWall(box: Box) {
+    box.validWall().assertTrue();
+  }
+
+  @method invalidateWall(box: Box) {
+    box.validWall().assertFalse();
   }
 }
 
@@ -123,7 +131,7 @@ describe('Box', () => {
     await localDeploy();
 
     const testcase = cases[ITEM.BOMB].pass;
-    const box = new BombBox({
+    const box = new Box({
       ins: testcase.ins.map((i) => Bool(i)),
       outs: testcase.outs.map((o) => Bool(o)),
       item: Field(testcase.item),
@@ -141,7 +149,7 @@ describe('Box', () => {
     await localDeploy();
 
     const testcase = cases[ITEM.BOMB].fail;
-    const box = new BombBox({
+    const box = new Box({
       ins: testcase.ins.map((i) => Bool(i)),
       outs: testcase.outs.map((o) => Bool(o)),
       item: Field(testcase.item),
@@ -159,7 +167,7 @@ describe('Box', () => {
     await localDeploy();
 
     const testcase = cases[ITEM.WALL].pass;
-    const box = new WallBox({
+    const box = new Box({
       ins: testcase.ins.map((i) => Bool(i)),
       outs: testcase.outs.map((o) => Bool(o)),
       item: Field(testcase.item),
@@ -177,7 +185,7 @@ describe('Box', () => {
     await localDeploy();
 
     const testcase = cases[ITEM.WALL].fail;
-    const box = new WallBox({
+    const box = new Box({
       ins: testcase.ins.map((i) => Bool(i)),
       outs: testcase.outs.map((o) => Bool(o)),
       item: Field(testcase.item),
@@ -195,7 +203,7 @@ describe('Box', () => {
     await localDeploy();
 
     const testcase = cases[ITEM.EMPTY].pass;
-    const box = new EmptyBox({
+    const box = new Box({
       ins: testcase.ins.map((i) => Bool(i)),
       outs: testcase.outs.map((o) => Bool(o)),
       item: Field(testcase.item),
@@ -213,7 +221,7 @@ describe('Box', () => {
     await localDeploy();
 
     const testcase = cases[ITEM.EMPTY].fail;
-    const box = new EmptyBox({
+    const box = new Box({
       ins: testcase.ins.map((i) => Bool(i)),
       outs: testcase.outs.map((o) => Bool(o)),
       item: Field(testcase.item),

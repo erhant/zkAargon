@@ -1,12 +1,12 @@
 import { Field, Struct, Bool } from 'o1js';
 import { DIR, DIRType } from './utils/Direction';
-import { BombBox } from './boxes/Bomb';
-import { EmptyBox } from './boxes/Empty';
-import { MirrorBox } from './boxes/Mirror';
-import { SourceBox } from './boxes/Source';
-import { SplitBox } from './boxes/Split';
-import { TargetBox } from './boxes/Target';
-import { WallBox } from './boxes/Wall';
+import { isValidBomb } from './boxes/Bomb';
+import { isValidEmpty } from './boxes/Empty';
+import { isValidMirror } from './boxes/Mirror';
+import { isValidSource } from './boxes/Source';
+import { isValidSplit } from './boxes/Split';
+import { isValidTarget } from './boxes/Target';
+import { isValidWall } from './boxes/Wall';
 
 /** A box item. */
 export enum ITEM {
@@ -21,6 +21,13 @@ export enum ITEM {
   SCATTER,
 }
 
+export type BoxFields = {
+  ins: Bool[];
+  outs: Bool[];
+  item: Field;
+  itemDir: Field;
+};
+
 // TODO: the reductions can be written once as a utility, they are repeated quite a lot
 
 // TODO: is item can be implemented within `Box`, with item type as a constructor param?
@@ -31,17 +38,74 @@ export enum ITEM {
  *
  * One can assume that if all boxes are valid, the game has a valid solution.
  */
-export abstract class Box extends Struct({
+export class Box extends Struct({
   ins: [Bool, Bool, Bool, Bool, Bool, Bool, Bool, Bool],
   outs: [Bool, Bool, Bool, Bool, Bool, Bool, Bool, Bool],
   item: Field,
   itemDir: Field,
 }) {
-  /** Returns `true` w.r.t item type. */
-  abstract isItem(): Bool;
+  validBomb(): Bool {
+    return isValidBomb({
+      ins: this.ins,
+      outs: this.outs,
+      item: this.item,
+      itemDir: this.itemDir,
+    }).and(this.item.equals(ITEM.BOMB));
+  }
 
-  /** Returns `true` if the laser configuration is valid w.r.t item. */
-  abstract isValid(): Bool;
+  validEmpty(): Bool {
+    return isValidEmpty({
+      ins: this.ins,
+      outs: this.outs,
+      item: this.item,
+      itemDir: this.itemDir,
+    }).and(this.item.equals(ITEM.EMPTY));
+  }
+
+  validMirror(): Bool {
+    return isValidMirror({
+      ins: this.ins,
+      outs: this.outs,
+      item: this.item,
+      itemDir: this.itemDir,
+    }).and(this.item.equals(ITEM.MIRROR));
+  }
+
+  validSource(): Bool {
+    return isValidSource({
+      ins: this.ins,
+      outs: this.outs,
+      item: this.item,
+      itemDir: this.itemDir,
+    }).and(this.item.equals(ITEM.SOURCE));
+  }
+
+  validSplit(): Bool {
+    return isValidSplit({
+      ins: this.ins,
+      outs: this.outs,
+      item: this.item,
+      itemDir: this.itemDir,
+    }).and(this.item.equals(ITEM.SPLIT));
+  }
+
+  validTarget(): Bool {
+    return isValidTarget({
+      ins: this.ins,
+      outs: this.outs,
+      item: this.item,
+      itemDir: this.itemDir,
+    }).and(this.item.equals(ITEM.TARGET));
+  }
+
+  validWall(): Bool {
+    return isValidWall({
+      ins: this.ins,
+      outs: this.outs,
+      item: this.item,
+      itemDir: this.itemDir,
+    }).and(this.item.equals(ITEM.WALL));
+  }
 
   /** Connects this box to another box at the given direction. */
   connect(other: Box, dir: DIRType) {
@@ -49,13 +113,3 @@ export abstract class Box extends Struct({
     this.ins[dir].assertEquals(other.outs[(dir + 4) % 8]);
   }
 }
-
-/** Union of all box types. */
-export type AllBoxes =
-  | BombBox
-  | EmptyBox
-  | MirrorBox
-  | SourceBox
-  | SplitBox
-  | TargetBox
-  | WallBox;
