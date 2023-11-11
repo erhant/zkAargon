@@ -1,22 +1,25 @@
-
-import Head from 'next/head';
-import Image from 'next/image';
-import { useEffect } from 'react';
-import GradientBG from '../components/GradientBG.js';
-import styles from '../styles/Home.module.css';
-import heroMinaLogo from '../../public/assets/hero-mina-logo.svg';
-import arrowRightSmall from '../../public/assets/arrow-right-small.svg';
+import Head from "next/head";
+import Image from "next/image";
+import { useEffect } from "react";
+import GradientBG from "../components/GradientBG.js";
+import styles from "../styles/Home.module.css";
+import heroMinaLogo from "../../public/assets/hero-mina-logo.svg";
+import arrowRightSmall from "../../public/assets/arrow-right-small.svg";
+import Grid from "@/components/Grid";
+import { DndProvider } from "react-dnd";
+import { HTML5Backend } from "react-dnd-html5-backend";
+import NewGrid from "@/components/NewGrid";
 
 export default function Home() {
   useEffect(() => {
     (async () => {
-      const { Mina, PublicKey } = await import('o1js');
-      const { Add } = await import('../../../contracts/build/src/');
+      const { Mina, PublicKey } = await import("o1js");
+      const { Add } = await import("../../../contracts/build/src/");
 
       // Update this to use the address (public key) for your zkApp account.
       // To try it out, you can try this address for an example "Add" smart contract that we've deployed to
       // Berkeley Testnet B62qkwohsqTBPsvhYE8cPZSpzJMgoKn4i1LQRuBAtVXWpaT4dgH6WoA.
-      const zkAppAddress = '';
+      const zkAppAddress = "";
       // This should be removed once the zkAppAddress is updated.
       if (!zkAppAddress) {
         console.error(
@@ -30,11 +33,11 @@ export default function Home() {
   return (
     <>
       <Head>
-        <title>Mina zkApp UI</title>
+        <title>zkAargon</title>
         <meta name="description" content="built with o1js" />
         <link rel="icon" href="/assets/favicon.ico" />
       </Head>
-      <GradientBG>
+      {/* <GradientBG>
         <main className={styles.main}>
           <div className={styles.center}>
             <a
@@ -143,7 +146,10 @@ export default function Home() {
             </a>
           </div>
         </main>
-      </GradientBG>
+      </GradientBG> */}
+      <DndProvider backend={HTML5Backend}>
+        <Grid />
+      </DndProvider>
     </>
   );
 }

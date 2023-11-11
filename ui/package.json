@@ -10,6 +10,7 @@
     "ts-watch": "tsc --noEmit --incremental --watch"
   },
   "dependencies": {
+    "@pixi/react": "^7.1.1",
     "@types/node": "20.9.0",
     "@types/react": "18.2.37",
     "@types/react-dom": "18.2.15",
@@ -17,11 +18,15 @@
     "eslint": "8.53.0",
     "eslint-config-next": "14.0.2",
     "next": "14.0.2",
+    "o1js": "0.*",
+    "pixi.js": "^7.3.2",
     "postcss": "8.4.31",
     "react": "18.2.0",
+    "react-beautiful-dnd": "^13.1.1",
+    "react-dnd": "^16.0.1",
+    "react-dnd-html5-backend": "^16.0.1",
     "react-dom": "18.2.0",
     "tailwindcss": "3.3.5",
-    "typescript": "5.2.2",
-    "o1js": "0.*"
+    "typescript": "5.2.2"
   }
 }
