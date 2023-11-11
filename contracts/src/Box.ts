@@ -7,6 +7,7 @@ import { isValidSource } from './boxes/Source';
 import { isValidSplit } from './boxes/Split';
 import { isValidTarget } from './boxes/Target';
 import { isValidWall } from './boxes/Wall';
+import { isValidScatter } from './boxes/Scatter';
 
 /** A box item. */
 export enum ITEM {
@@ -69,6 +70,15 @@ export class Box extends Struct({
       item: this.item,
       itemDir: this.itemDir,
     }).and(this.item.equals(ITEM.MIRROR));
+  }
+
+  validScatter(): Bool {
+    return isValidScatter({
+      ins: this.ins,
+      outs: this.outs,
+      item: this.item,
+      itemDir: this.itemDir,
+    }).and(this.item.equals(ITEM.SCATTER));
   }
 
   validSource(): Bool {

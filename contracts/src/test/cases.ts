@@ -95,38 +95,37 @@ export const cases: Record<number, Record<'pass' | 'fail', CaseType>> = {
       itemDir: DIR.TOP_LEFT,
     },
   },
-  // TODO: BELOW ARE DUMMY
-  [ITEM.DIAGONAL]: {
-    fail: {
-      ins: [true, false, false, false, false, false, false, false],
-      outs: [false, false, false, false, false, false, false, false],
-      item: ITEM.BOMB,
-      itemDir: DIR.BOTTOM,
-    },
-    pass: {
-      ins: [false, false, false, false, false, false, false, false],
-      outs: [false, false, false, false, false, false, false, false],
-      item: ITEM.BOMB,
-      itemDir: DIR.BOTTOM,
-    },
-  },
-  // TODO: BELOW ARE DUMMY
+
   [ITEM.SPLIT]: {
     fail: {
-      ins: [true, false, false, false, false, false, false, false],
-      outs: [false, false, false, false, false, false, false, false],
-      item: ITEM.BOMB,
-      itemDir: DIR.BOTTOM,
+      ins: [false, false, false, true, false, false, false, false],
+      outs: [false, false, false, false, false, false, false, true],
+      item: ITEM.SPLIT,
+      itemDir: DIR.TOP,
     },
     pass: {
-      ins: [false, false, false, false, false, false, false, false],
-      outs: [false, false, false, false, false, false, false, false],
-      item: ITEM.BOMB,
-      itemDir: DIR.BOTTOM,
+      ins: [false, true, false, false, false, false, false, false],
+      outs: [false, false, false, true, false, false, false, true],
+      item: ITEM.SPLIT,
+      itemDir: DIR.TOP,
+    },
+  },
+  [ITEM.SCATTER]: {
+    fail: {
+      ins: [false, true, false, false, false, false, false, false],
+      outs: [false, false, false, false, true, false, false, false],
+      item: ITEM.SCATTER,
+      itemDir: DIR.TOP,
+    },
+    pass: {
+      ins: [false, true, false, false, false, false, false, false],
+      outs: [false, false, false, false, true, false, true, false],
+      item: ITEM.SCATTER,
+      itemDir: DIR.TOP,
     },
   },
   // TODO: BELOW ARE DUMMY
-  [ITEM.SCATTER]: {
+  [ITEM.DIAGONAL]: {
     fail: {
       ins: [true, false, false, false, false, false, false, false],
       outs: [false, false, false, false, false, false, false, false],
