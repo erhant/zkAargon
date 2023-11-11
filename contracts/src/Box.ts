@@ -1,5 +1,12 @@
 import { Field, Struct, Bool } from 'o1js';
 import { DIR, DIRType } from './utils/Direction';
+import { BombBox } from './boxes/Bomb';
+import { EmptyBox } from './boxes/Empty';
+import { MirrorBox } from './boxes/Mirror';
+import { SourceBox } from './boxes/Source';
+import { SplitBox } from './boxes/Split';
+import { TargetBox } from './boxes/Target';
+import { WallBox } from './boxes/Wall';
 
 /** A box item. */
 export enum ITEM {
@@ -41,8 +48,14 @@ export abstract class Box extends Struct({
     // this is a simpler method, we only care about `out` of the other box
     this.ins[dir].assertEquals(other.outs[(dir + 4) % 8]);
   }
-
-  validate(boxes: Box[]) {
-    // TODO: ?
-  }
 }
+
+/** Union of all box types. */
+export type AllBoxes =
+  | BombBox
+  | EmptyBox
+  | MirrorBox
+  | SourceBox
+  | SplitBox
+  | TargetBox
+  | WallBox;

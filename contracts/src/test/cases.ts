@@ -1,122 +1,143 @@
 import { ITEM } from '../Box';
 import { DIR, DIRType } from '../utils/Direction';
 
-export const cases: Record<
-  ITEM,
-  {
-    // prettier-ignore
-    ins: [boolean, boolean, boolean, boolean, boolean, boolean, boolean, boolean],
-    // prettier-ignore
-    outs: [boolean, boolean, boolean, boolean, boolean, boolean, boolean, boolean],
-    item: ITEM;
-    itemDir: DIRType;
-    shouldPass: boolean;
-  }[]
-> = {
-  [ITEM.BOMB]: [
-    {
+export type CaseType = {
+  // prettier-ignore
+  ins: [boolean, boolean, boolean, boolean, boolean, boolean, boolean, boolean],
+  // prettier-ignore
+  outs: [boolean, boolean, boolean, boolean, boolean, boolean, boolean, boolean],
+  item: ITEM;
+  itemDir: DIRType;
+};
+export const cases: Record<number, Record<'pass' | 'fail', CaseType>> = {
+  [ITEM.BOMB]: {
+    fail: {
       ins: [true, false, false, false, false, false, false, false],
       outs: [false, false, false, false, false, false, false, false],
       item: ITEM.BOMB,
       itemDir: DIR.BOTTOM,
-      shouldPass: false,
     },
-    {
+    pass: {
       ins: [false, false, false, false, false, false, false, false],
       outs: [false, false, false, false, false, false, false, false],
       item: ITEM.BOMB,
       itemDir: DIR.BOTTOM,
-      shouldPass: true,
     },
-  ],
-  [ITEM.EMPTY]: [
-    {
+  },
+  [ITEM.EMPTY]: {
+    pass: {
+      ins: [true, false, true, false, false, false, false, false],
+      outs: [false, false, false, false, true, false, true, false],
+      item: ITEM.EMPTY,
+      itemDir: DIR.TOP,
+    },
+    fail: {
       // we have in from 0 but we dont have out at 4
       ins: [true, false, true, false, false, false, false, false],
       outs: [false, false, false, false, false, false, true, false],
       item: ITEM.EMPTY,
       itemDir: DIR.TOP,
-      shouldPass: false,
     },
-    {
-      ins: [true, false, true, false, false, false, false, false],
-      outs: [false, false, false, false, true, false, true, false],
-      item: ITEM.EMPTY,
-      itemDir: DIR.TOP,
-      shouldPass: true,
-    },
-  ],
-  [ITEM.WALL]: [
-    {
-      ins: [true, false, false, false, false, false, false, false],
-      outs: [false, false, false, false, false, false, true, false],
-      item: ITEM.WALL,
-      itemDir: DIR.TOP,
-      shouldPass: false,
-    },
-    {
+  },
+  [ITEM.WALL]: {
+    pass: {
       ins: [true, false, false, false, false, false, false, false],
       outs: [false, false, false, false, false, false, false, false],
       item: ITEM.WALL,
       itemDir: DIR.TOP,
-      shouldPass: true,
     },
-  ],
-  [ITEM.TARGET]: [
-    {
+    fail: {
+      ins: [true, false, false, false, false, false, false, false],
+      outs: [false, false, false, false, false, false, true, false],
+      item: ITEM.WALL,
+      itemDir: DIR.TOP,
+    },
+  },
+  [ITEM.TARGET]: {
+    fail: {
       ins: [false, false, false, false, false, false, false, false],
       outs: [false, false, false, false, false, false, true, false],
       item: ITEM.SOURCE,
       itemDir: DIR.TOP,
-      shouldPass: false,
     },
-    {
+    pass: {
       ins: [true, false, false, false, false, false, false, false],
       outs: [false, false, false, false, true, false, false, false],
       item: ITEM.SOURCE,
       itemDir: DIR.TOP,
-      shouldPass: true,
     },
-  ],
-  [ITEM.SOURCE]: [
-    {
+  },
+  [ITEM.SOURCE]: {
+    fail: {
       ins: [false, false, false, false, false, false, false, false],
       outs: [false, true, false, false, false, false, false, false],
       item: ITEM.SOURCE,
       itemDir: DIR.RIGHT,
-      shouldPass: false,
     },
-    {
+    pass: {
       ins: [true, false, false, false, false, false, false, false],
       outs: [false, false, false, true, false, false, false, false],
       item: ITEM.SOURCE,
       itemDir: DIR.RIGHT,
-      shouldPass: true,
     },
-  ],
-  [ITEM.MIRROR]: [
-    {
+  },
+  [ITEM.MIRROR]: {
+    fail: {
       ins: [false, true, false, false, false, false, false, false],
       outs: [true, false, false, false, false, false, false, false],
       item: ITEM.MIRROR,
       itemDir: DIR.TOP_LEFT,
-      shouldPass: false,
     },
-    {
+    pass: {
       ins: [false, true, false, false, false, false, false, false],
       outs: [false, false, false, false, false, false, false, true],
       item: ITEM.MIRROR,
       itemDir: DIR.TOP_LEFT,
-      shouldPass: true,
     },
-  ],
-  [ITEM.DIAGONAL]: [
-    // TODO: later
-  ],
-  [ITEM.SPLIT]: [
-    // TODO: later
-  ],
-  [ITEM.SCATTER]: [
-    // TODO: later
-  ],
+  },
+  // TODO: BELOW ARE DUMMY
+  [ITEM.DIAGONAL]: {
+    fail: {
+      ins: [true, false, false, false, false, false, false, false],
+      outs: [false, false, false, false, false, false, false, false],
+      item: ITEM.BOMB,
+      itemDir: DIR.BOTTOM,
+    },
+    pass: {
+      ins: [false, false, false, false, false, false, false, false],
+      outs: [false, false, false, false, false, false, false, false],
+      item: ITEM.BOMB,
+      itemDir: DIR.BOTTOM,
+    },
+  },
+  // TODO: BELOW ARE DUMMY
+  [ITEM.SPLIT]: {
+    fail: {
+      ins: [true, false, false, false, false, false, false, false],
+      outs: [false, false, false, false, false, false, false, false],
+      item: ITEM.BOMB,
+      itemDir: DIR.BOTTOM,
+    },
+    pass: {
+      ins: [false, false, false, false, false, false, false, false],
+      outs: [false, false, false, false, false, false, false, false],
+      item: ITEM.BOMB,
+      itemDir: DIR.BOTTOM,
+    },
+  },
+  // TODO: BELOW ARE DUMMY
+  [ITEM.SCATTER]: {
+    fail: {
+      ins: [true, false, false, false, false, false, false, false],
+      outs: [false, false, false, false, false, false, false, false],
+      item: ITEM.BOMB,
+      itemDir: DIR.BOTTOM,
+    },
+    pass: {
+      ins: [false, false, false, false, false, false, false, false],
+      outs: [false, false, false, false, false, false, false, false],
+      item: ITEM.BOMB,
+      itemDir: DIR.BOTTOM,
+    },
+  },
 };
