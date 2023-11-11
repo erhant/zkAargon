@@ -1,6 +1,7 @@
 import { DIR } from '../utils/direction';
 import { ITEM } from '../utils/item';
 
+/** A box type without provable types. */
 export type RawBoxType = {
   // prettier-ignore
   ins: [boolean, boolean, boolean, boolean, boolean, boolean, boolean, boolean],

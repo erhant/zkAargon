@@ -19,9 +19,12 @@ Due to the time limits and the circuit complexities, our game is a toned-down ve
   - **[Scatter](./contracts/src/boxes/Scatter.ts)**: A more advanced item where the laser can be split diagonally in two.
   - **[Split](./contracts/src/boxes/Split.ts)**: Another advanced item where the laser is split perpendicularly in two.
   - **[Target](./contracts/src/boxes/Target.ts)**: This item must have a laser going through itself, it is technically the objective. There can be multiple items.
+  - **[Source](./contracts/src/boxes/Source.ts)**: This is the item that emits a laser in a single direction.
   - **[Wall](./contracts/src/boxes/Wall.ts)**: No laser can pass through the wall.
 
 The game board is shown as a 2D grid, where we refer to each cell as a "box". The player also has an inventory. specific to each puzzle, where they can only use the given items.
+
+Within the code, only the items and their directions are given, the laser paths for the entire board is computed with an algorithm that simlpy starts at all source boxes.
 
 ## Designing the Circuit
 
