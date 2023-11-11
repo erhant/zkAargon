@@ -95,10 +95,9 @@ export const cases: Record<number, Record<'pass' | 'fail', CaseType>> = {
       itemDir: DIR.TOP_LEFT,
     },
   },
-
   [ITEM.SPLIT]: {
     fail: {
-      ins: [false, false, false, true, false, false, false, false],
+      ins: [false, true, false, false, false, false, false, false],
       outs: [false, false, false, false, false, false, false, true],
       item: ITEM.SPLIT,
       itemDir: DIR.TOP,

@@ -16,7 +16,7 @@ export function isValidSplit(fields: BoxFields): Bool {
     DIR.ALL.map((d) => {
       // is this item looking at this direction?
       const isItemDir = fields.itemDir.equals(d);
-      const d_l = (d - 2) % 8;
+      const d_l = (d - 2 + 8) % 8;
       const d_r = (d + 2) % 8;
 
       // is the item valid for this direction?
@@ -28,15 +28,13 @@ export function isValidSplit(fields: BoxFields): Bool {
         .equals(fields.outs[d_r])
         .and(fields.ins[d].equals(fields.outs[d_l]));
 
-      // - the other output signals should be 0
-      // TODO: refactor
+      // - the other output signals should be 0 (except d-2, d+2)
       const isValidOut = fields.outs[d]
-        .equals(false)
-        .and(fields.outs[(d + 1) % 8].equals(false))
-        .and(fields.outs[(d + 3) % 8].equals(false))
-        .and(fields.outs[(d + 4) % 8].equals(false))
-        .and(fields.outs[(d + 5) % 8].equals(false))
-        .and(fields.outs[(d + 7) % 8].equals(false));
+        .or(fields.outs[(d + 1) % 8])
+        .or(fields.outs[(d + 3) % 8])
+        .or(fields.outs[(d + 4) % 8])
+        .or(fields.outs[(d + 5) % 8])
+        .or(fields.outs[(d + 7) % 8]).not();
 
       // finally `and` them all
       const isValid = isValidDirect.and(isValidOut);

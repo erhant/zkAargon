@@ -17,7 +17,7 @@ export function isValidMirror(fields: BoxFields): Bool {
     DIR.ALL.map((d) => {
       // is this item looking at this direction?
       const isItemDir = fields.itemDir.equals(d);
-      const d_l = (d - 1) % 8;
+      const d_l = (d - 1 + 8) % 8;
       const d_r = (d + 1) % 8;
 
       // is the item valid for this direction?
