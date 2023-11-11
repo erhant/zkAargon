@@ -117,8 +117,27 @@ export class Box extends Struct({
     }).and(this.item.equals(ITEM.WALL));
   }
 
+  /**
+   * Checks all validity functions, expects at least one to be true.
+   * If there are no soundness issues, we should expect only one anyways.
+   */
+  assertBox() {
+    [
+      this.validBomb(),
+      this.validEmpty(),
+      this.validMirror(),
+      this.validScatter(),
+      this.validSource(),
+      this.validSplit(),
+      this.validTarget(),
+      this.validWall(),
+    ]
+      .reduce((acc, cur) => acc.or(cur))
+      .assertTrue('invalid box');
+  }
+
   /** Connects this box to another box at the given direction. */
-  connect(other: Box, dir: DIRType) {
+  assertConnection(other: Box, dir: DIRType) {
     // this is a simpler method, we only care about `out` of the other box
     this.ins[dir].assertEquals(other.outs[(dir + 4) % 8]);
   }
