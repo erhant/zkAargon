@@ -23,6 +23,7 @@ export class ZkAargon extends SmartContract {
     super.init();
   }
 
+  /** Utility function to hash a board. For each box, item and itemDir is used. */
   private hashBoard(board: Box[]) {
     return Poseidon.hash(board.map((b) => [b.item, b.itemDir]).flat());
   }
@@ -45,7 +46,7 @@ export class ZkAargon extends SmartContract {
       ];
 
       connections
-        .filter((conn) => conn[0] < 0 || conn[1] >= solution.length)
+        .filter((conn) => conn[0] >= 0 && conn[0] < solution.length)
         .forEach((conn) => box.assertConnection(solution[conn[0]], conn[1]));
     });
 
@@ -67,6 +68,9 @@ export class ZkAargon extends SmartContract {
     // board hash should be correct
     const boardHash = this.boardHash.getAndAssertEquals();
     this.hashBoard(board).assertEquals(boardHash, 'board hashes do not match');
+
+    // all checks passed
+    this.isSolved.set(Bool(true));
   }
 
   /** Updates the on-chain hash with a new board, and sets `isSolved` to false. */

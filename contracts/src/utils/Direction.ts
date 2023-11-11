@@ -1,5 +1,7 @@
 export type DIRType = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7;
 
+// TODO: we can probably make this back an ENUM
+
 /** A direction of a box.
  *
  * ```c
