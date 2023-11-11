@@ -1,0 +1,60 @@
+---------------------------------
+Example-1
+---------------------------------
+Inputs:
+
+items = [ITEM.SOURCE, ITEM.SOURCE, ITEM.TARGET, ITEM.BOMB, ITEM.SPLIT, ITEM.MIRROR, ITEM.WALL, ITEM.TARGET, ITEM.EMPTY]
+item_dirs = [DIR.BOTTOM_RIGHT,DIR.BOTTOM_RIGHT, DIR.BOTTOM_LEFT, DIR.BOTTOM_LEFT,DIR.TOP_LEFT, DIR.LEFT, DIR.TOP, DIR.TOP, DIR.TOP]
+
+Outputs:
+ins:
+[0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 1, 0]
+[0, 0, 0, 0, 0, 0, 0, 0]
+[1, 0, 0, 0, 0, 0, 0, 0]
+[1, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 1, 0, 0, 0, 0, 0]
+[0, 0, 1, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0]
+
+outs:
+[0, 0, 0, 0, 1, 0, 0, 0]
+[0, 0, 0, 0, 1, 0, 0, 0]
+[0, 0, 1, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 1, 0, 0, 0, 1, 0]
+[0, 0, 0, 0, 0, 0, 1, 0]
+[0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 1, 0]
+[0, 0, 0, 0, 0, 0, 0, 0]
+
+---------------------------------
+Example-2
+---------------------------------
+Inputs:
+items = [ITEM.SOURCE, ITEM.SOURCE, ITEM.TARGET, ITEM.BOMB, ITEM.SPLIT, ITEM.MIRROR, ITEM.WALL, ITEM.TARGET, ITEM.EMPTY]
+item_dirs = [DIR.BOTTOM_RIGHT,DIR.BOTTOM_RIGHT, DIR.BOTTOM_LEFT, DIR.BOTTOM_LEFT,DIR.TOP_LEFT, DIR.LEFT, DIR.TOP, DIR.TOP, DIR.TOP]
+
+Outputs:
+ins:
+[0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 1, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 1]
+[0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0]
+[0, 1, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0]
+[0, 1, 0, 0, 0, 0, 0, 0]
+
+outs:
+[0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 1, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 1, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0]
+[0, 1, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 1, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 1, 0, 0]
