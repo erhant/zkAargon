@@ -1,6 +1,6 @@
 import { Bool, Field } from 'o1js';
 import { BoxFields } from '../Box';
-import { DIR } from '../utils/Direction';
+import { DIR_ALL } from '../utils/direction';
 
 /**
  * A source box has a single `out` signal at the
@@ -10,7 +10,7 @@ import { DIR } from '../utils/Direction';
 export function isValidSource(fields: BoxFields): Bool {
   // check for each direction
   return (
-    DIR.ALL.map((d) => Field(d))
+    DIR_ALL.map((d) => Field(d))
       .map((df) => {
         // is this item looking at this direction?
         const isItemDir = fields.itemDir.equals(df);

@@ -1,15 +1,17 @@
-import { ITEM } from '../Box';
-import { DIR, DIRType } from '../utils/Direction';
+import { DIR } from '../utils/direction';
+import { ITEM } from '../utils/item';
 
-export type CaseType = {
+export type RawBoxType = {
   // prettier-ignore
   ins: [boolean, boolean, boolean, boolean, boolean, boolean, boolean, boolean],
   // prettier-ignore
   outs: [boolean, boolean, boolean, boolean, boolean, boolean, boolean, boolean],
   item: ITEM;
-  itemDir: DIRType;
+  itemDir: DIR;
 };
-export const cases: Record<number, Record<'pass' | 'fail', CaseType>> = {
+
+/** A passing and failing test case for each box type. */
+export const cases: Record<ITEM, Record<'pass' | 'fail', RawBoxType>> = {
   [ITEM.BOMB]: {
     fail: {
       ins: [true, false, false, false, false, false, false, false],
@@ -121,21 +123,6 @@ export const cases: Record<number, Record<'pass' | 'fail', CaseType>> = {
       outs: [false, false, false, false, true, false, true, false],
       item: ITEM.SCATTER,
       itemDir: DIR.TOP,
-    },
-  },
-  // TODO: BELOW ARE DUMMY
-  [ITEM.DIAGONAL]: {
-    fail: {
-      ins: [true, false, false, false, false, false, false, false],
-      outs: [false, false, false, false, false, false, false, false],
-      item: ITEM.BOMB,
-      itemDir: DIR.BOTTOM,
-    },
-    pass: {
-      ins: [false, false, false, false, false, false, false, false],
-      outs: [false, false, false, false, false, false, false, false],
-      item: ITEM.BOMB,
-      itemDir: DIR.BOTTOM,
     },
   },
 };

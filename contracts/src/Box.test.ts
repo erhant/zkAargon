@@ -8,10 +8,11 @@ import {
   method,
   Bool,
 } from 'o1js';
-import { Box, ITEM } from './Box';
-import { cases } from './test/cases';
+import { Box } from './Box';
+import { cases } from './test/boxes';
+import { ITEM } from './utils/item';
 
-// NOTE: interesting things about this test:
+// TODO: interesting things about this test:
 // - giving a union type to `box` in the contract causes
 // it to be seen as "non provable" type?
 // - giving abstract type also causes problem for `isValid` not being a function

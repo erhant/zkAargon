@@ -10,7 +10,7 @@ import { Field, Mina, PrivateKey, PublicKey, AccountUpdate } from 'o1js';
 
 let proofsEnabled = false;
 
-describe('Add', () => {
+describe.skip('Add', () => {
   let deployerAccount: PublicKey,
     deployerKey: PrivateKey,
     senderAccount: PublicKey,

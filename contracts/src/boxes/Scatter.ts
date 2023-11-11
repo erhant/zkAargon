@@ -1,11 +1,11 @@
 import { Bool } from 'o1js';
 import { BoxFields } from '../Box';
-import { DIR } from '../utils/Direction';
+import { DIR_ALL } from '../utils/direction';
 
 export function isValidScatter(fields: BoxFields): Bool {
   // check for each direction
   return (
-    DIR.ALL.map((d) => {
+    DIR_ALL.map((d) => {
       // is this item looking at this direction?
       const isItemDir = fields.itemDir.equals(d);
       const d_l = (d - 3 + 8) % 8;
@@ -29,7 +29,8 @@ export function isValidScatter(fields: BoxFields): Bool {
         .or(fields.outs[(d + 2) % 8])
         .or(fields.outs[(d + 4) % 8])
         .or(fields.outs[(d + 6) % 8])
-        .or(fields.outs[(d + 7) % 8]).not();
+        .or(fields.outs[(d + 7) % 8])
+        .not();
 
       // finally `and` them all
       const isValid = isValidDirect.and(isValidCorners).and(isValidOut);

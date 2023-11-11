@@ -1,6 +1,6 @@
 import { Bool } from 'o1js';
 import { BoxFields } from '../Box';
-import { DIR } from '../utils/Direction';
+import { DIR_ALL } from '../utils/direction';
 
 /** A mirror box bounces the input laser.
  *
@@ -14,7 +14,7 @@ import { DIR } from '../utils/Direction';
 export function isValidMirror(fields: BoxFields): Bool {
   // check for each direction
   return (
-    DIR.ALL.map((d) => {
+    DIR_ALL.map((d) => {
       // is this item looking at this direction?
       const isItemDir = fields.itemDir.equals(d);
       const d_l = (d - 1 + 8) % 8;

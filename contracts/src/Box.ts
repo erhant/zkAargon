@@ -1,5 +1,5 @@
 import { Field, Struct, Bool } from 'o1js';
-import { DIR, DIRType } from './utils/Direction';
+import { DIR } from './utils/direction';
 import { isValidBomb } from './boxes/Bomb';
 import { isValidEmpty } from './boxes/Empty';
 import { isValidMirror } from './boxes/Mirror';
@@ -8,19 +8,7 @@ import { isValidSplit } from './boxes/Split';
 import { isValidTarget } from './boxes/Target';
 import { isValidWall } from './boxes/Wall';
 import { isValidScatter } from './boxes/Scatter';
-
-/** A box item. */
-export enum ITEM {
-  EMPTY,
-  WALL,
-  BOMB,
-  TARGET,
-  MIRROR,
-  DIAGONAL,
-  SOURCE,
-  SPLIT,
-  SCATTER,
-}
+import { ITEM } from './utils/item';
 
 export type BoxFields = {
   ins: Bool[];
@@ -137,7 +125,7 @@ export class Box extends Struct({
   }
 
   /** Connects this box to another box at the given direction. */
-  assertConnection(other: Box, dir: DIRType) {
+  assertConnection(other: Box, dir: DIR) {
     // this is a simpler method, we only care about `out` of the other box
     this.ins[dir].assertEquals(other.outs[(dir + 4) % 8]);
   }

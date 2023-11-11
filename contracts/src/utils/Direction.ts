@@ -1,7 +1,3 @@
-export type DIRType = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7;
-
-// TODO: we can probably make this back an ENUM
-
 /** A direction of a box.
  *
  * ```c
@@ -12,51 +8,25 @@ export type DIRType = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7;
  * botleft---bot---botright
  * ```
  */
-export class DIR {
-  static TOP_LEFT = 0 as const;
-  static TOP = 1 as const;
-  static TOP_RIGHT = 2 as const;
-  static RIGHT = 3 as const;
-  static BOTTOM_RIGHT = 4 as const;
-  static BOTTOM = 5 as const;
-  static BOTTOM_LEFT = 6 as const;
-  static LEFT = 7 as const;
-
-  /** Shorthand to get all directions as an array. */
-  static ALL = [
-    DIR.TOP_LEFT,
-    DIR.TOP,
-    DIR.TOP_RIGHT,
-    DIR.RIGHT,
-    DIR.BOTTOM_RIGHT,
-    DIR.BOTTOM,
-    DIR.BOTTOM_LEFT,
-    DIR.LEFT,
-  ] as const;
-
-  /** Iterator over direction values. */
-  static *[Symbol.iterator]() {
-    yield DIR.TOP_LEFT;
-    yield DIR.TOP;
-    yield DIR.TOP_RIGHT;
-    yield DIR.RIGHT;
-    yield DIR.BOTTOM_RIGHT;
-    yield DIR.BOTTOM;
-    yield DIR.BOTTOM_LEFT;
-    yield DIR.LEFT;
-  }
-
-  /** Map a direction to an opposite direction */
-  static opposite(dir: DIRType) {
-    return {
-      [DIR.TOP_LEFT]: DIR.BOTTOM_RIGHT,
-      [DIR.TOP]: DIR.BOTTOM,
-      [DIR.TOP_RIGHT]: DIR.BOTTOM_LEFT,
-      [DIR.RIGHT]: DIR.LEFT,
-      [DIR.BOTTOM_RIGHT]: DIR.TOP_LEFT,
-      [DIR.BOTTOM]: DIR.TOP,
-      [DIR.BOTTOM_LEFT]: DIR.TOP_RIGHT,
-      [DIR.LEFT]: DIR.RIGHT,
-    }[dir];
-  }
+export enum DIR {
+  TOP_LEFT,
+  TOP,
+  TOP_RIGHT,
+  RIGHT,
+  BOTTOM_RIGHT,
+  BOTTOM,
+  BOTTOM_LEFT,
+  LEFT,
 }
+
+/** An array of all directions, from top-left clockwise. */
+export const DIR_ALL = [
+  DIR.TOP_LEFT,
+  DIR.TOP,
+  DIR.TOP_RIGHT,
+  DIR.RIGHT,
+  DIR.BOTTOM_RIGHT,
+  DIR.BOTTOM,
+  DIR.BOTTOM_LEFT,
+  DIR.LEFT,
+] as const;
