@@ -6,6 +6,7 @@ import {
   method,
   Poseidon,
   Bool,
+  Circuit,
 } from 'o1js';
 import { Box } from './Box';
 import { DIR } from './utils/direction';
