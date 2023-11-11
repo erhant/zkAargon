@@ -1,1 +1,1 @@
-// TODO: make gameboard tests
+export { SMALL_EXAMPLE } from './board/small';

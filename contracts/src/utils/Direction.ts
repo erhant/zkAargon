@@ -30,3 +30,6 @@ export const DIR_ALL = [
   DIR.BOTTOM_LEFT,
   DIR.LEFT,
 ] as const;
+
+/** Default direction, 0. */
+export const DEFAULT_DIR = DIR.TOP_LEFT;

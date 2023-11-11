@@ -6,12 +6,11 @@ import {
   method,
   Poseidon,
   Bool,
+  Circuit,
 } from 'o1js';
 import { Box } from './Box';
 import { DIR } from './utils/direction';
 import { ITEM, ITEM_ALL } from './utils/item';
-
-// TODO: add ownership?
 
 // TODO: make dimensions flexible?
 const [ROWS, COLS] = [10, 10];

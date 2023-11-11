@@ -19,6 +19,7 @@ Due to the time limits and the circuit complexities, our game is a toned-down ve
   - **[Scatter](./contracts/src/boxes/Scatter.ts)**: A more advanced item where the laser can be split diagonally in two.
   - **[Split](./contracts/src/boxes/Split.ts)**: Another advanced item where the laser is split perpendicularly in two.
   - **[Target](./contracts/src/boxes/Target.ts)**: This item must have a laser going through itself, it is technically the objective. There can be multiple items.
+  - **[Source](./contracts/src/boxes/Source.ts)**: This is the item that emits a laser in a single direction.
   - **[Wall](./contracts/src/boxes/Wall.ts)**: No laser can pass through the wall.
 
 The game board is shown as a 2D grid, where we refer to each cell as a "box". The player also has an inventory. specific to each puzzle, where they can only use the given items.
@@ -56,6 +57,8 @@ In the case of a `Wall`, the item direction does not matter; but, for items such
 
 After proving all boxes, we must prove that their connections are correct; that is, the `out` laser of a box must be `in` to another box.
 
+It should also be noted that the lasers within the game are computed again for each change in the board. They are computed for one last time at the submission step. The algorithm starts from the **Source** box (described below) and propagates the laser until the end. We then convert these to provable `Bool` values for the contract transaction data.
+
 ### Proving the Items
 
 The player is given a set of items to play with, and the proof must adhere to this inventory. To prove this, the number of total items are hashed at the start. This assumes that all items MUST be used from the inventory to solve the puzzle, admittely a drawback for the gaming experience.
@@ -70,6 +73,8 @@ Similar to the Sudoku example, we must prove that the board matches the solution
 
 TODO: describe
 
+For more details, please refer to the README files within the [contracts](./contracts/) and [ui](./ui/) folders.
+
 ## Testing
 
-TODO: describe
+Please refer to the README file within the [contracts](./contracts/) folder.

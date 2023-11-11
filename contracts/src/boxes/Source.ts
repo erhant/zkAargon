@@ -4,8 +4,11 @@ import { DIR_ALL } from '../utils/direction';
 
 /**
  * A source box has a single `out` signal at the
- * direction that the source is looking at. It does not have
- * any other `out` signals.
+ * direction that the source is looking at.
+ * It does not have any other `out` signals.
+ *
+ * Item direction is the direction at which the laser is
+ * outputted from source.
  */
 export function isValidSource(fields: BoxFields): Bool {
   // check for each direction
