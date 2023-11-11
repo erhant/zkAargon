@@ -18,6 +18,8 @@ import { WallBox } from './boxes/Wall';
 import { EmptyBox } from './boxes/Empty';
 import { MirrorBox } from './boxes/Mirror';
 import { SourceBox } from './boxes/Source';
+import { SplitBox } from './boxes/Split';
+import { ScatterBox } from './boxes/Scatter';
 
 // NOTE: interesting things about this test:
 // - giving a union type to `box` in the contract causes
@@ -67,6 +69,22 @@ export class BoxTester extends SmartContract {
   }
 
   @method invalidateSource(box: SourceBox) {
+    box.isValid().assertFalse();
+  }
+
+  @method validateSplit(box: SplitBox) {
+    box.isValid().assertTrue();
+  }
+
+  @method invalidateSplit(box: SplitBox) {
+    box.isValid().assertFalse();
+  }
+
+  @method validateScatter(box: ScatterBox) {
+    box.isValid().assertTrue();
+  }
+
+  @method invalidateScatter(box: ScatterBox) {
     box.isValid().assertFalse();
   }
 }
@@ -222,6 +240,114 @@ describe('Box', () => {
 
     const txn = await Mina.transaction(senderAccount, () => {
       zkApp.invalidateEmpty(box);
+    });
+    await txn.prove();
+    await txn.sign([senderKey]).send();
+  });
+
+  it('should validate source box', async () => {
+    await localDeploy();
+
+    const testcase = cases[ITEM.SOURCE].pass;
+    const box = new SourceBox({
+      ins: testcase.ins.map((i) => Bool(i)),
+      outs: testcase.outs.map((o) => Bool(o)),
+      item: Field(testcase.item),
+      itemDir: Field(testcase.itemDir),
+    });
+
+    const txn = await Mina.transaction(senderAccount, () => {
+      zkApp.validateSource(box);
+    });
+    await txn.prove();
+    await txn.sign([senderKey]).send();
+  });
+
+  it('should invalidate source box', async () => {
+    await localDeploy();
+
+    const testcase = cases[ITEM.SOURCE].fail;
+    const box = new SourceBox({
+      ins: testcase.ins.map((i) => Bool(i)),
+      outs: testcase.outs.map((o) => Bool(o)),
+      item: Field(testcase.item),
+      itemDir: Field(testcase.itemDir),
+    });
+
+    const txn = await Mina.transaction(senderAccount, () => {
+      zkApp.invalidateSource(box);
+    });
+    await txn.prove();
+    await txn.sign([senderKey]).send();
+  });
+
+  it('should validate split box', async () => {
+    await localDeploy();
+
+    const testcase = cases[ITEM.SPLIT].pass;
+    const box = new SplitBox({
+      ins: testcase.ins.map((i) => Bool(i)),
+      outs: testcase.outs.map((o) => Bool(o)),
+      item: Field(testcase.item),
+      itemDir: Field(testcase.itemDir),
+    });
+
+    const txn = await Mina.transaction(senderAccount, () => {
+      zkApp.validateSplit(box);
+    });
+    await txn.prove();
+    await txn.sign([senderKey]).send();
+  });
+
+  it('should invalidate split box', async () => {
+    await localDeploy();
+
+    const testcase = cases[ITEM.SPLIT].fail;
+    const box = new SplitBox({
+      ins: testcase.ins.map((i) => Bool(i)),
+      outs: testcase.outs.map((o) => Bool(o)),
+      item: Field(testcase.item),
+      itemDir: Field(testcase.itemDir),
+    });
+
+    const txn = await Mina.transaction(senderAccount, () => {
+      zkApp.invalidateSplit(box);
+    });
+    await txn.prove();
+    await txn.sign([senderKey]).send();
+  });
+
+  it('should validate scatter box', async () => {
+    await localDeploy();
+
+    const testcase = cases[ITEM.SCATTER].pass;
+    const box = new ScatterBox({
+      ins: testcase.ins.map((i) => Bool(i)),
+      outs: testcase.outs.map((o) => Bool(o)),
+      item: Field(testcase.item),
+      itemDir: Field(testcase.itemDir),
+    });
+
+    const txn = await Mina.transaction(senderAccount, () => {
+      zkApp.validateScatter(box);
+    });
+    await txn.prove();
+    await txn.sign([senderKey]).send();
+  });
+
+  it('should invalidate scatter box', async () => {
+    await localDeploy();
+
+    const testcase = cases[ITEM.SCATTER].fail;
+    const box = new ScatterBox({
+      ins: testcase.ins.map((i) => Bool(i)),
+      outs: testcase.outs.map((o) => Bool(o)),
+      item: Field(testcase.item),
+      itemDir: Field(testcase.itemDir),
+    });
+
+    const txn = await Mina.transaction(senderAccount, () => {
+      zkApp.invalidateScatter(box);
     });
     await txn.prove();
     await txn.sign([senderKey]).send();

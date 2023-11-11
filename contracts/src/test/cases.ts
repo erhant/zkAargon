@@ -110,34 +110,32 @@ export const cases: Record<number, Record<'pass' | 'fail', CaseType>> = {
       itemDir: DIR.BOTTOM,
     },
   },
-  // TODO: BELOW ARE DUMMY
   [ITEM.SPLIT]: {
     fail: {
-      ins: [true, false, false, false, false, false, false, false],
-      outs: [false, false, false, false, false, false, false, false],
-      item: ITEM.BOMB,
-      itemDir: DIR.BOTTOM,
+      ins: [false, false, false, true, false, false, false, false],
+      outs: [false, false, false, false, false, false, false, true],
+      item: ITEM.SPLIT,
+      itemDir: DIR.TOP,
     },
     pass: {
-      ins: [false, false, false, false, false, false, false, false],
-      outs: [false, false, false, false, false, false, false, false],
-      item: ITEM.BOMB,
-      itemDir: DIR.BOTTOM,
+      ins: [false, true, false, false, false, false, false, false],
+      outs: [false, false, false, true, false, false, false, true],
+      item: ITEM.SPLIT,
+      itemDir: DIR.TOP,
     },
   },
-  // TODO: BELOW ARE DUMMY
   [ITEM.SCATTER]: {
     fail: {
-      ins: [true, false, false, false, false, false, false, false],
-      outs: [false, false, false, false, false, false, false, false],
-      item: ITEM.BOMB,
-      itemDir: DIR.BOTTOM,
+      ins: [false, true, false, false, false, false, false, false],
+      outs: [false, false, false, false, true, false, false, false],
+      item: ITEM.SCATTER,
+      itemDir: DIR.TOP,
     },
     pass: {
-      ins: [false, false, false, false, false, false, false, false],
-      outs: [false, false, false, false, false, false, false, false],
-      item: ITEM.BOMB,
-      itemDir: DIR.BOTTOM,
+      ins: [false, true, false, false, false, false, false, false],
+      outs: [false, false, false, false, true, false, true, false],
+      item: ITEM.SCATTER,
+      itemDir: DIR.TOP,
     },
   },
 };
