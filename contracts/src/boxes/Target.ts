@@ -2,7 +2,11 @@ import { Bool } from 'o1js';
 import { BoxFields } from '../Box';
 import { isValidEmpty } from './Empty';
 
-/** A target box acts like an empty one, but must have at least one `in`. */
+/**
+ * A target box acts like an empty one, but must have at least one `in`.
+ *
+ * Item direction is irrelevant.
+ */
 export function isValidTarget(fields: BoxFields): Bool {
   // should act like an empty box
   const isEmpty = isValidEmpty(fields);

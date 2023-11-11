@@ -24,8 +24,6 @@ Due to the time limits and the circuit complexities, our game is a toned-down ve
 
 The game board is shown as a 2D grid, where we refer to each cell as a "box". The player also has an inventory. specific to each puzzle, where they can only use the given items.
 
-Within the code, only the items and their directions are given, the laser paths for the entire board is computed with an algorithm that simlpy starts at all source boxes.
-
 ## Designing the Circuit
 
 The entire game circuit has three parts:
@@ -59,6 +57,8 @@ In the case of a `Wall`, the item direction does not matter; but, for items such
 
 After proving all boxes, we must prove that their connections are correct; that is, the `out` laser of a box must be `in` to another box.
 
+It should also be noted that the lasers within the game are computed again for each change in the board. They are computed for one last time at the submission step. The algorithm starts from the **Source** box (described below) and propagates the laser until the end. We then convert these to provable `Bool` values for the contract transaction data.
+
 ### Proving the Items
 
 The player is given a set of items to play with, and the proof must adhere to this inventory. To prove this, the number of total items are hashed at the start. This assumes that all items MUST be used from the inventory to solve the puzzle, admittely a drawback for the gaming experience.
@@ -73,6 +73,8 @@ Similar to the Sudoku example, we must prove that the board matches the solution
 
 TODO: describe
 
+For more details, please refer to the README files within the [contracts](./contracts/) and [ui](./ui/) folders.
+
 ## Testing
 
-TODO: describe
+Please refer to the README file within the [contracts](./contracts/) folder.

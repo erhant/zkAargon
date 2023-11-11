@@ -2,7 +2,8 @@ import { Bool } from 'o1js';
 import { BoxFields } from '../Box';
 import { DIR_ALL } from '../utils/direction';
 
-/** A mirror box bounces the input laser.
+/**
+ * A mirror box bounces the input laser.
  *
  * If the laser is coming diagonally w.r.t the mirror direction,
  * it should bounce off to the other direction (d+2); or,
@@ -10,6 +11,9 @@ import { DIR_ALL } from '../utils/direction';
  * direction.
  *
  * There shouldn't be any other out signals.
+ *
+ * The item direction is the direction at which the mirror
+ * directly reflects back the laser.
  */
 export function isValidMirror(fields: BoxFields): Bool {
   // check for each direction
