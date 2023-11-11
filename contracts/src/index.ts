@@ -1,3 +1,3 @@
-import { Add } from './Add.js';
+import { ZkAargon } from './Aargon.js';
 
-export { Add };
+export { ZkAargon };

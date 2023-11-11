@@ -1,4 +1,4 @@
-# Mina zkApp: Zkaargon
+# Mina zkApp: ZkAargon
 
 This template uses TypeScript.
 
