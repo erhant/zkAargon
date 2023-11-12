@@ -11,19 +11,19 @@ const InventoryItem: React.FC<{
   item: InventoryItem;
   onItemClick: (item: InventoryItem) => void;
 }> = ({ item, onItemClick }) => {
-  console.log("item", item);
+  // console.log("item", item);
 
   return (
     <button
       onClick={() => {
-        console.log("inventoryitem", item);
+        // console.log("inventoryitem", item);
         onItemClick(item);
       }}
       className="w-full h-full flex items-center justify-center border p-2 "
     >
       <Image
         // src={`/${item}.svg`}
-        src={"/assets/mirror.svg"}
+        src={"/assets/mirror.jpg"}
         alt={item.type.toString()}
         className=""
         width={48}

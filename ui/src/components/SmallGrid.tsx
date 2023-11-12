@@ -1,4 +1,4 @@
-import { MAP_ONE, TileType } from "@/lib/maps";
+import { EXAMPLE_MAP, TileType } from "@/lib/maps";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { useMouse } from "react-use";
 // import { useMouse } from "@uidotdev/usehooks";
@@ -17,10 +17,10 @@ export interface InventoryItem {
   type: TileType;
 }
 
-const TILE_WIDTH = 60;
-const TILE_HEIGHT = 60;
+const TILE_WIDTH = 200;
+const TILE_HEIGHT = 200;
 
-const Grid: React.FC<IGrid> = ({}) => {
+const SmallGrid: React.FC<IGrid> = ({}) => {
   const [selectedItem, setSelectedItem] = useState<InventoryItem | null>(null);
   const [inventoryList, setInventoryList] = useState<InventoryItem[]>([
     {
@@ -48,10 +48,9 @@ const Grid: React.FC<IGrid> = ({}) => {
   const ref = useRef(null);
   const lightCanvasRef = useRef<HTMLCanvasElement>(null);
   const [lightPosition, setLightPosition] = useState({ row: 5, col: 20 });
-  const [map, setMap] = useState<TileType[]>(MAP_ONE);
+  const [map, setMap] = useState<TileType[]>(EXAMPLE_MAP);
   const [tilePoints, setTilePoints] = useState<{ [key: string]: Point[] }>({});
   const { docX, docY, posY, posX } = useMouse(lightCanvasRef);
-  const [boxSelection, setBoxSelection] = useState({ x: 0, y: 0 });
 
   // console.log("doc", docX, docY);
   console.log("pos", posX, posY);
@@ -90,52 +89,38 @@ const Grid: React.FC<IGrid> = ({}) => {
 
       const draw = () => {
         drawMap();
-        propagateLight(lightCtx!, 5); // Example: Light source at the center of the grid
+        propagateLight(lightCtx!, 0); // Example: Light source at the center of the grid
         requestAnimationFrame(draw);
       };
-
       const propagateLight = (
         context: CanvasRenderingContext2D,
-        // sourceRow: number,
-        // sourceCol: number,
-        lightDirection: number // Angle in radians (0 to 2π)
+        lightDirection: number
       ) => {
         const sourceRow = lightPosition.row;
         const sourceCol = lightPosition.col;
         context.clearRect(0, 0, lightCanvas.width, lightCanvas.height);
         context.strokeStyle = "yellow";
         context.lineWidth = 2;
-        const drawRay = (
-          angle: number,
-          startingPoint: { x: number; y: number }
-        ) => {
-          console.log(
-            "🚀 ~ file: Grid.tsx:58 ~ useEffect ~ startingPoint:",
-            startingPoint
-          );
-          let row = startingPoint.y / TILE_HEIGHT;
-          let col = startingPoint.x / TILE_WIDTH;
 
+        const drawLightRay = () => {
           context.beginPath();
-          context.moveTo(
-            TILE_WIDTH * col + TILE_WIDTH / 2,
-            TILE_HEIGHT * row + TILE_HEIGHT / 2
+          const sourceX = TILE_WIDTH * (sourceCol + 0.5);
+          console.log(
+            "🚀 ~ file: SmallGrid.tsx:107 ~ drawLightRay ~ sourceX:",
+            sourceX
           );
+          const sourceY = TILE_HEIGHT * (sourceRow + 0.5);
+          context.moveTo(sourceX, sourceY); // Move to the center of the source tile
 
-          while (row >= 0 && row < 10 && col >= 0 && col < 10) {
-            row += Math.sin(angle); // Update using sin
-            col += Math.cos(angle); // Update using cos
+          let row = sourceRow;
+          let col = sourceCol;
 
-            const arrayIndex = Math.floor(row) * 10 + Math.floor(col);
+          while (row >= 0 && row < 3 && col >= 0 && col < 3) {
+            row += Math.sin(lightDirection);
+            col += Math.cos(lightDirection);
 
-            if (map[arrayIndex] === TileType.Wall) {
-              break;
-            }
-
-            // Convert row and col back to pixel coordinates
-            const x = 300;
-            const y = 300;
-
+            const x = TILE_WIDTH * (col + 0.5);
+            const y = TILE_HEIGHT * (row + 0.5);
             context.lineTo(x, y);
           }
 
@@ -143,24 +128,21 @@ const Grid: React.FC<IGrid> = ({}) => {
         };
 
         // Draw light source
+        const sourceX = TILE_WIDTH * (sourceCol + 0.5);
+        const sourceY = TILE_HEIGHT * (sourceRow + 0.5);
         context.fillStyle = "yellow";
         context.beginPath();
         context.arc(
-          300,
-          300,
+          sourceX,
+          sourceY,
           10, // Adjust the size of the light source
           0,
           2 * Math.PI
         );
         context.fill();
 
-        // Draw light ray based on the light direction
-        const startPoint = {
-          x: 300,
-          y: 300,
-        };
-        const angle = lightDirection;
-        drawRay(angle, startPoint);
+        // Draw the light ray
+        drawLightRay();
       };
 
       const calculateTilePoints = (col: number, row: number) => {
@@ -186,9 +168,9 @@ const Grid: React.FC<IGrid> = ({}) => {
       };
 
       const drawMap = () => {
-        for (let eachRow = 0; eachRow < 10; eachRow++) {
-          for (let eachCol = 0; eachCol < 10; eachCol++) {
-            let arrayIndex = eachRow * 10 + eachCol;
+        for (let eachRow = 0; eachRow < 3; eachRow++) {
+          for (let eachCol = 0; eachCol < 3; eachCol++) {
+            let arrayIndex = eachRow * 3 + eachCol;
 
             ctx!.strokeStyle = "white";
             ctx?.strokeRect(
@@ -206,17 +188,18 @@ const Grid: React.FC<IGrid> = ({}) => {
                 ctx!.fillStyle = "lightgray";
                 break;
               case TileType.Mirror:
-                // ctx!.fillStyle = "blue";
-                ctx!.fillStyle = "none";
-                const image = new Image();
-                image.src = "/assets/mirror.jpg";
-                image.onload = () => {
-                  console.log("image", image, posX, posY);
+                ctx!.fillStyle = "blue";
+                // const image = new Image();
+                // image.src = "/assets/mirror.svg";
+                // image.onload = () => {
+                //   console.log("image", image);
 
-                  lightCtx!.drawImage(image, posX, posY, 30, 30);
-                  lightCtx!.strokeRect(posX, posY, 30, 30);
-                };
+                //   ctx!.drawImage(image, 6, 8, 20, 20);
+                // };
                 ctx!.strokeRect(14, 8, 5, 5);
+                break;
+              case TileType.Bomb:
+                ctx!.fillStyle = "purple";
                 break;
               default:
                 ctx!.fillStyle = "black";
@@ -253,6 +236,7 @@ const Grid: React.FC<IGrid> = ({}) => {
   // });
 
   // const [globalCoords, setGlobalCoords] = useState({ x: 0, y: 0 });
+  const [boxSelection, setBoxSelection] = useState({ x: 0, y: 0 });
 
   const handleMouseMove = useCallback((event: any) => {
     // 👇️ Get the mouse position relative to the element
@@ -407,7 +391,7 @@ const Grid: React.FC<IGrid> = ({}) => {
   console.log("local", boxSelection);
 
   return (
-    <section className=" h-full -mb-4 w-screen flex items-center justify-center">
+    <section className=" h-full  w-screen flex items-center justify-center">
       {/* <div className="w-48 h-48 bg-green-400"></div> */}
       <Inventory
         // onInventoryClick={handleInventoryItemClick}
@@ -419,14 +403,16 @@ const Grid: React.FC<IGrid> = ({}) => {
         {/* <BoardSquare game={game} x={50} y={50}> */}
         {/* <Mirror /> */}
         {/* </BoardSquare> */}
-        {/* <canvas
+        <canvas
           ref={lightCanvasRef}
           width={600}
           onMouseMove={handleMouseMove}
           onClick={handleCanvasClick}
           height={600}
           className="absolute cursor-pointer left-auto top-0"
-        ></canvas> */}
+          // style={{ position: "absolute", top: 0, left: 0, zIndex: 1 }}
+        ></canvas>
+        {/* <h1 className="text-4xl">Hey</h1> */}
       </div>
       <GameControls />
       {/* <Mirror /> */}
@@ -434,4 +420,4 @@ const Grid: React.FC<IGrid> = ({}) => {
   );
 };
 
-export default Grid;
+export default SmallGrid;

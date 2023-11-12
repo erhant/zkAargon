@@ -1,3 +1,4 @@
+import ConnectWallet from "@/components/ConnectWallet";
 import Grid from "@/components/Grid";
 import { Pixelify_Sans } from "next/font/google";
 import Head from "next/head";
@@ -32,7 +33,7 @@ export default function Home() {
   return (
     <>
       <Head>
-        <title className={pixelifySans.className}>zkAargon</title>
+        <title>zkAargon</title>
         <meta name="description" content="built with o1js" />
         <link rel="icon" href="/assets/favicon.ico" />
       </Head>
@@ -148,6 +149,13 @@ export default function Home() {
       </GradientBG> */}
       <div className={pixelifySans.className}>
         <DndProvider backend={HTML5Backend}>
+          <nav className="w-full flex justify-between mx-auto px-8 ">
+            <a href="#" className="text-2xl tracking-tighter pt-4 w-fit">
+              zkAargon
+            </a>
+            <ConnectWallet />
+          </nav>
+          {/* <SmallGrid /> */}
           <Grid />
         </DndProvider>
       </div>
