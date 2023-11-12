@@ -1,14 +1,14 @@
+import ConnectWallet from "@/components/ConnectWallet";
+import SmallGrid from "@/components/SmallGrid";
+import { Pixelify_Sans } from "next/font/google";
 import Head from "next/head";
-import Image from "next/image";
 import { useEffect } from "react";
-import GradientBG from "../components/GradientBG.js";
-import styles from "../styles/Home.module.css";
-import heroMinaLogo from "../../public/assets/hero-mina-logo.svg";
-import arrowRightSmall from "../../public/assets/arrow-right-small.svg";
-import Grid from "@/components/Grid";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
-import NewGrid from "@/components/NewGrid";
+
+const pixelifySans = Pixelify_Sans({
+  subsets: ["latin"],
+});
 
 export default function Home() {
   useEffect(() => {
@@ -147,9 +147,18 @@ export default function Home() {
           </div>
         </main>
       </GradientBG> */}
-      <DndProvider backend={HTML5Backend}>
-        <Grid />
-      </DndProvider>
+      <div className={pixelifySans.className}>
+        <DndProvider backend={HTML5Backend}>
+          <nav className="w-full flex justify-between mx-auto px-8 ">
+            <a href="#" className="text-2xl tracking-tighter pt-4 w-fit">
+              zkAargon
+            </a>
+            <ConnectWallet />
+          </nav>
+          <SmallGrid />
+          {/* <Grid /> */}
+        </DndProvider>
+      </div>
     </>
   );
 }

@@ -109,3 +109,15 @@ export const MAP_ONE: TileType[] = [
   TileType.Empty,
   TileType.Empty,
 ];
+
+export const EXAMPLE_MAP: TileType[] = [
+  TileType.Empty,
+  TileType.Mirror,
+  TileType.Mirror,
+  TileType.Empty,
+  TileType.Light,
+  TileType.Empty,
+  TileType.Bomb,
+  TileType.Wall,
+  TileType.Orb,
+];
