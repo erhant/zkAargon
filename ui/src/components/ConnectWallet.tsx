@@ -3,16 +3,23 @@ import { Toaster, toast } from "sonner";
 // import {LoginWithEmail} from "./LoginWithEmail";
 // import { RiArrowDropDownLine } from "react-icons/ri";
 
-interface IConnectWallet {}
+interface IConnectWallet {
+  setMinaObj: (val: any) => void;
+  address: string;
+  setAddress: (val: string) => void;
+}
 
 let accounts;
 let mina: any;
 
-const ConnectWallet: React.FC<IConnectWallet> = ({}) => {
+const ConnectWallet: React.FC<IConnectWallet> = ({
+  setMinaObj,
+  address,
+  setAddress,
+}) => {
   // const { data: walletClient } = useWalletClient();
   // Accounts is an array of string Mina addresses.
   const [isSignedIn, setIsSignedIn] = useState(false);
-  const [address, setAddress] = useState("");
 
   //   console.log("🚀 ~ file: Navbar.tsx:26 ~ address:", address);
 
@@ -29,7 +36,7 @@ const ConnectWallet: React.FC<IConnectWallet> = ({}) => {
       accounts = await mina.requestAccounts();
       const display = `${accounts[0].slice(0, 6)}...${accounts[0].slice(-4)}`;
       console.log("ascc", accounts[0]);
-
+      setMinaObj(mina);
       setAddress(display);
       setIsSignedIn(true);
       console.log(

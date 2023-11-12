@@ -10,7 +10,8 @@ interface IInventory {
 const InventoryItem: React.FC<{
   item: InventoryItem;
   onItemClick: (item: InventoryItem) => void;
-}> = ({ item, onItemClick }) => {
+  i: number;
+}> = ({ item, onItemClick, i }) => {
   // console.log("item", item);
 
   return (
@@ -23,7 +24,11 @@ const InventoryItem: React.FC<{
     >
       <Image
         // src={`/${item}.svg`}
-        src={"/assets/mirror.jpg"}
+        src={
+          i === 0
+            ? "/assets/mirror-bottom-right.jpg"
+            : "/assets/mirror-bottom-left.jpg"
+        }
         alt={item.type.toString()}
         className=""
         width={48}
@@ -44,10 +49,11 @@ const Inventory: React.FC<IInventory> = ({
   };
   return (
     <div className="grid grid-cols-2 p-2 rounded-sm grid-rows-5 w-48 h-[400px] bg-slate-400">
-      {inventoryList.map((item) => {
+      {inventoryList.map((item, index) => {
         return (
           <InventoryItem
             key={item.id}
+            i={index}
             onItemClick={handleInventoryItemClick}
             item={item}
           />
