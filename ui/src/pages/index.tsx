@@ -1,5 +1,5 @@
 import ConnectWallet from "@/components/ConnectWallet";
-import Grid from "@/components/Grid";
+import SmallGrid from "@/components/SmallGrid";
 import { Pixelify_Sans } from "next/font/google";
 import Head from "next/head";
 import { useEffect } from "react";
@@ -155,8 +155,8 @@ export default function Home() {
             </a>
             <ConnectWallet />
           </nav>
-          {/* <SmallGrid /> */}
-          <Grid />
+          <SmallGrid />
+          {/* <Grid /> */}
         </DndProvider>
       </div>
     </>

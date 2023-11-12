@@ -195,24 +195,47 @@ function boardGenerate(
 
 export function main() {
   const n = 3;
-  const items: ITEM[] = [
-    ITEM.SOURCE,
-    ITEM.SOURCE,
-    ITEM.TARGET,
-    ITEM.BOMB,
-    ITEM.SPLIT,
+  // const items: ITEM[] = [
+  //   ITEM.SOURCE,
+  //   ITEM.SOURCE,
+  //   ITEM.TARGET,
+  //   ITEM.BOMB,
+  //   ITEM.SPLIT,
+  //   ITEM.MIRROR,
+  //   ITEM.WALL,
+  //   ITEM.TARGET,
+  //   ITEM.EMPTY,
+  // ];
+  // const itemDirs: DIR[] = [
+  //   DIR.BOTTOM_RIGHT,
+  //   DIR.BOTTOM_RIGHT,
+  //   DIR.BOTTOM_LEFT,
+  //   DIR.BOTTOM_LEFT,
+  //   DIR.TOP_LEFT,
+  //   DIR.LEFT,
+  //   DIR.TOP,
+  //   DIR.TOP,
+  //   DIR.TOP,
+  // ];
+
+  const items = [
+    ITEM.EMPTY,
     ITEM.MIRROR,
+    ITEM.MIRROR,
+    ITEM.EMPTY,
+    ITEM.SOURCE,
+    ITEM.EMPTY,
+    ITEM.BOMB,
     ITEM.WALL,
     ITEM.TARGET,
-    ITEM.EMPTY,
   ];
-  const itemDirs: DIR[] = [
-    DIR.BOTTOM_RIGHT,
+  const itemDirs = [
+    DIR.TOP,
     DIR.BOTTOM_RIGHT,
     DIR.BOTTOM_LEFT,
     DIR.BOTTOM_LEFT,
-    DIR.TOP_LEFT,
-    DIR.LEFT,
+    DIR.TOP,
+    DIR.TOP,
     DIR.TOP,
     DIR.TOP,
     DIR.TOP,
@@ -223,6 +246,8 @@ export function main() {
   for (const inx of ins) console.log("inx", inx);
   console.log("============");
   for (const outx of outs) console.log("outx", outx);
+
+  return { ins, outs };
 }
 
 main();

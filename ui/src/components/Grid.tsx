@@ -419,14 +419,14 @@ const Grid: React.FC<IGrid> = ({}) => {
         {/* <BoardSquare game={game} x={50} y={50}> */}
         {/* <Mirror /> */}
         {/* </BoardSquare> */}
-        {/* <canvas
+        <canvas
           ref={lightCanvasRef}
           width={600}
           onMouseMove={handleMouseMove}
           onClick={handleCanvasClick}
           height={600}
           className="absolute cursor-pointer left-auto top-0"
-        ></canvas> */}
+        ></canvas>
       </div>
       <GameControls />
       {/* <Mirror /> */}
