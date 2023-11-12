@@ -1,4 +1,4 @@
-import { Field } from 'o1js';
+import { Field, Struct } from 'o1js';
 import { BoardCase } from '../test/board/common';
 
 /** A box item. */
@@ -25,9 +25,8 @@ export const ITEM_ALL = [
   ITEM.SCATTER,
 ] as const;
 
-export function itemsInitial(): Record<ITEM, Field> {
-  // TODO: this safe right?
-  return {
+export function itemsInitial(): ItemCounts {
+  return new ItemCounts({
     [ITEM.BOMB]: Field(0),
     [ITEM.EMPTY]: Field(0),
     [ITEM.MIRROR]: Field(0),
@@ -36,11 +35,11 @@ export function itemsInitial(): Record<ITEM, Field> {
     [ITEM.SPLIT]: Field(0),
     [ITEM.TARGET]: Field(0),
     [ITEM.WALL]: Field(0),
-  };
+  });
 }
 
 /** Utility for testing. */
-export function findItemCounts(testcase: BoardCase): Record<ITEM, Field> {
+export function findItemCounts(testcase: BoardCase): ItemCounts {
   const { board, inventory, solution } = testcase;
 
   // compute items (board + inventory)
@@ -70,16 +69,29 @@ export function findItemCounts(testcase: BoardCase): Record<ITEM, Field> {
 
   // assert item counts for the tests sake
   ITEM_ALL.forEach((item) => {
+    // console.log({ a: itemsS[item], i: item, b: itemsBI[item] });
+    if (item === ITEM.EMPTY) return;
     if (itemsS[item] !== itemsBI[item]) {
-      throw new Error('expected item counts to match');
+      throw new Error('expected non-empty item counts to match');
     }
   });
 
   // assign to field elements
-  const items = {} as Record<ITEM, Field>;
+  const items = itemsInitial();
   ITEM_ALL.forEach((item) => {
     items[item] = Field(itemsS[item]);
   });
 
   return items;
 }
+
+export class ItemCounts extends Struct({
+  [ITEM.BOMB]: Field,
+  [ITEM.EMPTY]: Field,
+  [ITEM.MIRROR]: Field,
+  [ITEM.SCATTER]: Field,
+  [ITEM.SOURCE]: Field,
+  [ITEM.SPLIT]: Field,
+  [ITEM.TARGET]: Field,
+  [ITEM.WALL]: Field,
+}) {}

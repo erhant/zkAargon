@@ -37,12 +37,18 @@ export function isValidMirror(fields: BoxFields): Bool {
       const isValidLeftBounce = fields.ins[d_r].equals(fields.outs[d_l]);
 
       // - the other output signals should be 0
-      const isValidOut = Array.from(
-        { length: 5 }, // ignore other 3 directions: d-1, d, d+1
-        (_, i) => fields.outs[(d + 2 + i) % 8].equals(false)
-      )
-        .reduce((acc, cur) => acc.or(cur))
-        .equals(false);
+      // const isValidOut = Array.from(
+      //   { length: 5 }, // ignore other 3 directions: d-1, d, d+1
+      //   (_, i) => fields.outs[(d + 2 + i) % 8].equals(false)
+      // )
+      //   .reduce((acc, cur) => acc.or(cur))
+      //   .equals(false);
+      const isValidOut = fields.outs[(d + 2) % 8]
+        .or(fields.outs[(d + 3) % 8])
+        .or(fields.outs[(d - 2 + 8) % 8])
+        .or(fields.outs[(d - 3 + 8) % 8])
+        .or(fields.outs[(d + 4) % 8])
+        .not();
 
       // finally `and` them all
       const isValid = isValidDirect

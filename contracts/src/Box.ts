@@ -1,4 +1,4 @@
-import { Field, Struct, Bool } from 'o1js';
+import { Field, Struct, Bool, Provable } from 'o1js';
 import { DIR } from './utils/direction';
 import { isValidBomb } from './boxes/Bomb';
 import { isValidEmpty } from './boxes/Empty';
@@ -120,7 +120,11 @@ export class Box extends Struct({
       this.validTarget(),
       this.validWall(),
     ]
-      .reduce((acc, cur) => acc.or(cur))
+      .reduce((acc, cur, i) => {
+        // Provable.log('Box:', i, ':', cur);
+
+        return acc.or(cur);
+      })
       .assertTrue('invalid box');
   }
 
@@ -130,3 +134,7 @@ export class Box extends Struct({
     this.ins[dir].assertEquals(other.outs[(dir + 4) % 8]);
   }
 }
+
+export class BoxArray extends Struct({
+  boxes: Provable.Array(Box, 3 * 3),
+}) {}

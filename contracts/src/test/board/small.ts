@@ -1,6 +1,6 @@
 import { DIR } from '../../utils/direction';
 import { ITEM } from '../../utils/item';
-import { BOMB, BoardBoxType, BoardCase, EMPTY, TARGET, WALL } from './common';
+import { BOMB, BoardCase, EMPTY, TARGET, WALL } from './common';
 
 /** Small example with few items. Expected to pass. */
 export const SMALL_EXAMPLE: BoardCase = {
