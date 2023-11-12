@@ -1,3 +1,5 @@
+import { Field } from 'o1js';
+import { Box, BoxArray } from '../../Box';
 import { DEFAULT_DIR, DIR } from '../../utils/direction';
 import { ITEM } from '../../utils/item';
 
@@ -12,6 +14,13 @@ export type BoardCase = {
   board: BoardBoxType[][];
   inventory: ITEM[];
   solution: BoardBoxType[][];
+};
+
+/** An example board test case. */
+export type BoardCaseProvable = {
+  board: BoxArray;
+  items: Record<ITEM, Field>;
+  solution: BoxArray;
 };
 
 export const BOMB: BoardBoxType = {
