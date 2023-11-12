@@ -3,7 +3,6 @@ import React, { useCallback, useEffect, useRef, useState } from "react";
 import { useMouse } from "react-use";
 // import { useMouse } from "@uidotdev/usehooks";
 import { main } from "@/lib/board_generator";
-import GameControls from "./GameControls";
 import Inventory from "./Inventory";
 interface Point {
   x: number;
@@ -428,7 +427,7 @@ const Grid: React.FC<IGrid> = ({}) => {
           className="absolute cursor-pointer left-auto top-0"
         ></canvas>
       </div>
-      <GameControls />
+      {/* <GameControls /> */}
       {/* <Mirror /> */}
     </section>
   );

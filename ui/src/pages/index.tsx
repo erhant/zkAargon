@@ -2,13 +2,16 @@ import ConnectWallet from "@/components/ConnectWallet";
 import SmallGrid from "@/components/SmallGrid";
 import { Pixelify_Sans } from "next/font/google";
 import Head from "next/head";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 const pixelifySans = Pixelify_Sans({
   subsets: ["latin"],
 });
 
 export default function Home() {
+  const [minaObj, setMinaObj] = useState();
+  const [address, setAddress] = useState("");
+
   useEffect(() => {
     (async () => {
       const { Mina, PublicKey } = await import("o1js");
@@ -17,14 +20,15 @@ export default function Home() {
       // Update this to use the address (public key) for your zkApp account.
       // To try it out, you can try this address for an example "Add" smart contract that we've deployed to
       // Berkeley Testnet B62qkwohsqTBPsvhYE8cPZSpzJMgoKn4i1LQRuBAtVXWpaT4dgH6WoA.
-      const zkAppAddress = "";
+      const zkAppAddress =
+        "B62qkwohsqTBPsvhYE8cPZSpzJMgoKn4i1LQRuBAtVXWpaT4dgH6WoA";
       // This should be removed once the zkAppAddress is updated.
       if (!zkAppAddress) {
         console.error(
           'The following error is caused because the zkAppAddress has an empty string as the public key. Update the zkAppAddress with the public key for your zkApp account, or try this address for an example "Add" smart contract that we deployed to Berkeley Testnet: B62qkwohsqTBPsvhYE8cPZSpzJMgoKn4i1LQRuBAtVXWpaT4dgH6WoA'
         );
       }
-      // const zkApp = new ZkAargon(PublicKey.fromBase58(zkAppAddress));
+      const zkApp = new ZkAargon(PublicKey.fromBase58(zkAppAddress));
     })();
   }, []);
 
@@ -151,9 +155,13 @@ export default function Home() {
           <a href="#" className="text-2xl tracking-tighter pt-4 w-fit">
             zkAargon
           </a>
-          <ConnectWallet />
+          <ConnectWallet
+            address={address}
+            setAddress={setAddress}
+            setMinaObj={setMinaObj}
+          />
         </nav>
-        <SmallGrid />
+        <SmallGrid mina={minaObj} />
         {/* <Grid /> */}
         {/* </DndProvider> */}
       </div>

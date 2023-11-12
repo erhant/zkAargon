@@ -1,6 +1,8 @@
 import React from "react";
 
-interface IGameControls {}
+interface IGameControls {
+  proveSolution: () => void;
+}
 
 const GameControls: React.FC<IGameControls> = ({}) => {
   return (

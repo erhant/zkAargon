@@ -3,7 +3,6 @@ import React, { useCallback, useEffect, useRef, useState } from "react";
 import { useMouse } from "react-use";
 // import { useMouse } from "@uidotdev/usehooks";
 import { main } from "@/lib/board_generator";
-import GameControls from "./GameControls";
 import Inventory from "./Inventory";
 interface Point {
   x: number;
@@ -14,8 +13,27 @@ interface LightData {
   ins: number[][];
   outs: number[][];
 }
+type SendTransactionResult = {
+  hash: string;
+};
 
-interface IGrid {}
+interface ProviderError extends Error {
+  message: string;
+  code: number;
+  data?: unknown;
+}
+
+interface SendTransactionArgs {
+  readonly transaction: string | object;
+  readonly feePayer?: {
+    readonly fee?: number;
+    readonly memo?: string;
+  };
+}
+
+interface IGrid {
+  mina: any;
+}
 
 export interface InventoryItem {
   id: number;
@@ -25,7 +43,7 @@ export interface InventoryItem {
 const TILE_WIDTH = 200;
 const TILE_HEIGHT = 200;
 
-const SmallGrid: React.FC<IGrid> = ({}) => {
+const SmallGrid: React.FC<IGrid> = ({ mina }) => {
   const [selectedItem, setSelectedItem] = useState<InventoryItem | null>(null);
   const [inventoryList, setInventoryList] = useState<InventoryItem[]>([
     {
@@ -298,14 +316,14 @@ const SmallGrid: React.FC<IGrid> = ({}) => {
                 ctx!.fillStyle = "lightgray";
                 break;
               case TileType.Mirror:
-                ctx!.fillStyle = "lightgray";
-                const image = new Image();
-                image.src = "/assets/mirror.jpg";
-                image.onload = () => {
-                  console.log("image", image);
+                ctx!.fillStyle = "blue";
+                // const image = new Image();
+                // image.src = "/assets/mirror.jpg";
+                // image.onload = () => {
+                //   console.log("image", image);
 
-                  ctx!.drawImage(image, 6, 8, 20, 20);
-                };
+                //   ctx!.drawImage(image, 6, 8, 20, 20);
+                // };
                 // ctx!.strokeRect(14, 8, 5, 5);
                 break;
               case TileType.Bomb:
@@ -358,8 +376,8 @@ const SmallGrid: React.FC<IGrid> = ({}) => {
     const xPercentage = ((event.clientX - rect.left) / rect.width) * 100;
     const yPercentage = ((event.clientY - rect.top) / rect.height) * 100;
 
-    const gridRow = Math.floor((yPercentage / 100) * 10);
-    const gridCol = Math.floor((xPercentage / 100) * 10);
+    const gridRow = Math.floor((yPercentage / 100) * 3);
+    const gridCol = Math.floor((xPercentage / 100) * 3);
 
     setBoxSelection({
       x: gridCol,
@@ -492,7 +510,6 @@ const SmallGrid: React.FC<IGrid> = ({}) => {
       }
     }
   };
-
   useEffect(() => {
     const lightArrays = main();
     console.log(
@@ -501,6 +518,17 @@ const SmallGrid: React.FC<IGrid> = ({}) => {
     );
     setLightData(lightArrays);
   }, []);
+
+  const proveSolution = async () => {
+    try {
+      // const updateResult: SendTransactionResult | ProviderError =
+      //   await mina!.sendTransaction({
+      //     transaction: transactionJSON, // this is zk commond, create by zkApp.
+      //   });
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
   // console.log("local", boxSelection);
 
@@ -523,14 +551,36 @@ const SmallGrid: React.FC<IGrid> = ({}) => {
           onMouseMove={handleMouseMove}
           onClick={handleCanvasClick}
           height={600}
-          className="absolute cursor-pointer left-auto z-20 top-0"
+          className="absolute cursor-pointer left-auto top-0"
         ></canvas>
         {/* <h1 className="text-4xl">Hey</h1> */}
       </div>
-      <GameControls />
+      <div className="relative left-16 flex w-96 flex-col  space-y-4 items-center justify-center h-full">
+        <button className="w-full hover:scale-105 transition duration-200 text-2xl  rounded-xl font-bold tracking-tighter bg-purple-800 text-white py-2.5">
+          Start Game
+        </button>
+        <button
+          onClick={proveSolution}
+          className="w-full text-2xl hover:scale-105 transition duration-200   rounded-xl font-bold tracking-tighter bg-purple-800 text-white py-2.5"
+        >
+          Submit Game
+        </button>
+        <button className="w-full hover:scale-105 transition duration-200 text-2xl  rounded-xl font-bold tracking-tighter bg-purple-800 text-white py-2.5">
+          Restart Game
+        </button>
+      </div>
       {/* <Mirror /> */}
     </section>
   );
 };
 
 export default SmallGrid;
+
+// casetoprovable inventory elimdeki itemlerin listesi
+// board item ve item dir
+// solution item ve itemdir
+
+// itemList [{item: ITEM.MIRROR, itemDir: DIR_TOP },{item: ITEM.MIRROR, itemDir: DIR_TOP }] }
+
+// ITEM = [MIRROR,MIRROR],
+// Solution [{item: ITEM.MIRROR, itemDir: DIR_BOTTOM_RIGHT},{item: ITEM.MIRROR, itemDir: DIR_BOTTOM_LEFT}]
