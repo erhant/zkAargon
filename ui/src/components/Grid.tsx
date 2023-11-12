@@ -54,7 +54,7 @@ const Grid: React.FC<IGrid> = ({}) => {
   const [boxSelection, setBoxSelection] = useState({ x: 0, y: 0 });
 
   // console.log("doc", docX, docY);
-  console.log("pos", posX, posY);
+  // console.log("pos", posX, posY);
 
   // const handleCanvasClick = () => {
   //   console.log("clicked");

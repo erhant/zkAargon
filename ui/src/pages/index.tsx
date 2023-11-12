@@ -3,8 +3,6 @@ import SmallGrid from "@/components/SmallGrid";
 import { Pixelify_Sans } from "next/font/google";
 import Head from "next/head";
 import { useEffect } from "react";
-import { DndProvider } from "react-dnd";
-import { HTML5Backend } from "react-dnd-html5-backend";
 
 const pixelifySans = Pixelify_Sans({
   subsets: ["latin"],
@@ -14,7 +12,7 @@ export default function Home() {
   useEffect(() => {
     (async () => {
       const { Mina, PublicKey } = await import("o1js");
-      const { Add } = await import("../../../contracts/build/src/");
+      const { ZkAargon } = await import("../../../contracts/build/src/");
 
       // Update this to use the address (public key) for your zkApp account.
       // To try it out, you can try this address for an example "Add" smart contract that we've deployed to
@@ -26,7 +24,7 @@ export default function Home() {
           'The following error is caused because the zkAppAddress has an empty string as the public key. Update the zkAppAddress with the public key for your zkApp account, or try this address for an example "Add" smart contract that we deployed to Berkeley Testnet: B62qkwohsqTBPsvhYE8cPZSpzJMgoKn4i1LQRuBAtVXWpaT4dgH6WoA'
         );
       }
-      //const zkApp = new Add(PublicKey.fromBase58(zkAppAddress))
+      // const zkApp = new ZkAargon(PublicKey.fromBase58(zkAppAddress));
     })();
   }, []);
 
@@ -148,16 +146,16 @@ export default function Home() {
         </main>
       </GradientBG> */}
       <div className={pixelifySans.className}>
-        <DndProvider backend={HTML5Backend}>
-          <nav className="w-full flex justify-between mx-auto px-8 ">
-            <a href="#" className="text-2xl tracking-tighter pt-4 w-fit">
-              zkAargon
-            </a>
-            <ConnectWallet />
-          </nav>
-          <SmallGrid />
-          {/* <Grid /> */}
-        </DndProvider>
+        {/* <DndProvider backend={HTML5Backend}> */}
+        <nav className="w-full flex justify-between mx-auto px-8 ">
+          <a href="#" className="text-2xl tracking-tighter pt-4 w-fit">
+            zkAargon
+          </a>
+          <ConnectWallet />
+        </nav>
+        <SmallGrid />
+        {/* <Grid /> */}
+        {/* </DndProvider> */}
       </div>
     </>
   );

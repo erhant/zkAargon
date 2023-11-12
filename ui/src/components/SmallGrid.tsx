@@ -36,28 +36,15 @@ const SmallGrid: React.FC<IGrid> = ({}) => {
       id: 1,
       type: TileType.Mirror,
     },
-    {
-      id: 2,
-      type: TileType.Mirror,
-    },
-    {
-      id: 3,
-      type: TileType.Mirror,
-    },
-    {
-      id: 4,
-      type: TileType.Mirror,
-    },
   ]);
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const ref = useRef(null);
   const lightCanvasRef = useRef<HTMLCanvasElement>(null);
   const [lightPosition, setLightPosition] = useState({ row: 5, col: 20 });
   const [map, setMap] = useState<TileType[]>(EXAMPLE_MAP);
   const [tilePoints, setTilePoints] = useState<{ [key: string]: Point[] }>({});
   const { docX, docY, posY, posX } = useMouse(lightCanvasRef);
   const [lightData, setLightData] = useState<LightData>();
-
+  const [boxSelection, setBoxSelection] = useState({ x: 0, y: 0 });
   // console.log("doc", docX, docY);
   // console.log("pos", posX, posY);
 
@@ -312,13 +299,13 @@ const SmallGrid: React.FC<IGrid> = ({}) => {
                 break;
               case TileType.Mirror:
                 ctx!.fillStyle = "lightgray";
-                // const image = new Image();
-                // image.src = "/assets/mirror.svg";
-                // image.onload = () => {
-                //   console.log("image", image);
+                const image = new Image();
+                image.src = "/assets/mirror.jpg";
+                image.onload = () => {
+                  console.log("image", image);
 
-                //   ctx!.drawImage(image, 6, 8, 20, 20);
-                // };
+                  ctx!.drawImage(image, 6, 8, 20, 20);
+                };
                 // ctx!.strokeRect(14, 8, 5, 5);
                 break;
               case TileType.Bomb:
@@ -359,7 +346,6 @@ const SmallGrid: React.FC<IGrid> = ({}) => {
   // });
 
   // const [globalCoords, setGlobalCoords] = useState({ x: 0, y: 0 });
-  const [boxSelection, setBoxSelection] = useState({ x: 0, y: 0 });
 
   const handleMouseMove = useCallback((event: any) => {
     // 👇️ Get the mouse position relative to the element

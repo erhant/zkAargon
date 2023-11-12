@@ -16,7 +16,7 @@ const InventoryItem: React.FC<{
   return (
     <button
       onClick={() => {
-        // console.log("inventoryitem", item);
+        console.log("inventoryitem", item);
         onItemClick(item);
       }}
       className="w-full h-full flex items-center justify-center border p-2 "
